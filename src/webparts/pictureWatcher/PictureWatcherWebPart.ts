@@ -57,7 +57,7 @@ export default class PictureWatcherWebPart extends BaseClientSideWebPart<
               groupName: strings.BasicGroupName,
               groupFields: [
                 PropertyFieldListPicker("pictureLibraryId", {
-                  label: "select a libary...",
+                  label: "Select a libary...",
                   selectedList: this.properties.pictureLibraryId,
                   includeHidden: false,
                   orderBy: PropertyFieldListPickerOrderBy.Title,

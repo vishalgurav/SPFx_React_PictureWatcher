@@ -5,7 +5,7 @@ import { escape } from "@microsoft/sp-lodash-subset";
 import { IPictureWatcherState, IPicture } from "./IPictureWatcherState";
 import { IPictureItem } from "./IPictureItem";
 import { sp, Web, Site } from "@pnp/sp";
-import { Spinner, SpinnerSize } from "office-ui-fabric-react";
+import { Spinner, SpinnerSize, ImageFit } from "office-ui-fabric-react";
 import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
 
 import {
@@ -69,9 +69,9 @@ export default class PictureWatcher extends React.Component<
       .orderBy("Modified", false)
       .getAll()
       .then((pictures: IPictureItem[]) => {
-        const newpicture: IPicture[] = pictures.map<IPicture>(p => ({
+        const newpicture: IPicture[] = pictures.map<IPictureItem>(p => ({
           title: p.title,
-          serverRelativeUrl: p.FileRef
+          serverRelativeUrl: p.serverRelativeUrl
         }));
         this.setState({
           pictures: newpicture,
@@ -85,7 +85,6 @@ export default class PictureWatcher extends React.Component<
   };
   public render(): React.ReactElement<IPictureWatcherProps> {
     const needsConfiguration: boolean = !this.props.pictureLibraryId;
-
     return (
       <div className={styles.pictureWatcher}>
         {needsConfiguration && (
@@ -110,6 +109,7 @@ export default class PictureWatcher extends React.Component<
                     <img
                       src={pictures.serverRelativeUrl}
                       alt={pictures.title}
+                      className={styles.imageContainer}
                     />
                   ))
                 : undefined}
